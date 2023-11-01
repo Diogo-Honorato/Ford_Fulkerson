@@ -14,6 +14,7 @@ typedef struct Celula
 typedef struct Lista
 {
 
+    char verticeOrigem;
     Celula *primeiro;
     Celula *ultimo;
 
@@ -26,16 +27,10 @@ typedef struct Grafo
 
 } Grafo;
 
-Grafo *criarGrafo(Grafo *grafo, int tamanho)
+Grafo *criarGrafo(int tamanho)
 {
 
-    grafo = (Grafo *)malloc(sizeof(Grafo));
-
-    if (grafo == NULL)
-    {
-        perror("Falha na alocação de memória");
-        exit(1);
-    }
+    Grafo *grafo = (Grafo *)malloc(sizeof(Grafo));
 
     grafo->array = (Lista *)malloc(tamanho * sizeof(Lista));
 
@@ -45,6 +40,8 @@ Grafo *criarGrafo(Grafo *grafo, int tamanho)
         grafo->array[i].primeiro = NULL;
 
         grafo->array[i].ultimo = NULL;
+
+        grafo->array[i].verticeOrigem = '0';
     }
 
     return grafo;
@@ -68,45 +65,89 @@ Celula *alocarCelula(char verticeAdjacente, int peso)
     return novaCelula;
 }
 
-int gerarChave(char verticeOrigem, int tamanho)
+int gerarChave(char verticeChave, int tamanho)
 {
 
-    int numeroInteiro = verticeOrigem - 'A';
+    int numeroInteiro = verticeChave - 'A';
 
     return numeroInteiro % tamanho;
-}
-
-int buscarVertice(Grafo *grafo, char vertice){
-    
-    // Fazer um if-else para verificar se existe ou nao o vertice, se existe retorne o indice se nao retorne 0.
-
 }
 
 void adicionarAresta(Grafo *grafo, char verticeOrigem, char verticeDestino, int pesoAresta, int tamanho)
 {
 
-    int condicaoChave;
+    char verticeChave = verticeOrigem;
+
     int chave = gerarChave(verticeOrigem, tamanho);
 
-    Celula *novaCelula = alocarCelula(verticeDestino,pesoAresta);
+    Celula *novaCelula = alocarCelula(verticeDestino, pesoAresta);
+
+    // Verificar primeiro se a hash esta com o fator de carga maior que 70%.
 
     // Verificar se o vertice de origem em questao ja possui uma lista.
 
-    condicaoChave = buscarVertice(grafo,verticeOrigem);
-    
-    if (condicaoChave)
+    while (grafo->array[chave].verticeOrigem != '0' && grafo->array[chave].verticeOrigem != verticeOrigem)
     {
-        grafo->array[condicaoChave].ultimo->proximo = novaCelula;
-        grafo->array[condicaoChave].ultimo = novaCelula;
+        verticeChave = verticeChave + 1;
+
+        chave = gerarChave(verticeChave, tamanho);
+    }
+
+    if (grafo->array[chave].verticeOrigem == verticeOrigem)
+    {
+
+        grafo->array[chave].ultimo->proximo = novaCelula;
+        grafo->array[chave].ultimo = novaCelula;
     }
     else
     {
-        while (grafo->array[chave].primeiro != NULL)
-        {
-            chave = gerarChave(verticeOrigem + 1, tamanho);
-        }
 
+        grafo->array[chave].verticeOrigem = verticeOrigem;
         grafo->array[chave].primeiro = novaCelula;
         grafo->array[chave].ultimo = novaCelula;
+    }
+}
+
+void liberarMemoria(Grafo *grafo, int tamanho)
+{
+    for (int i = 0; i < SIZE; i++)
+    {
+        Celula *atual = grafo->array[i].primeiro;
+        while (atual)
+        {
+            Celula *temp = atual;
+            atual = atual->proximo;
+            free(temp);
+        }
+    }
+
+    free(grafo->array);
+}
+
+
+void imprimirGrafo(Grafo *grafo, int tamanho)
+{
+    Celula *iterador;
+
+    for (int i = 0; i < tamanho; i++)
+    {
+
+        if (grafo->array[i].verticeOrigem != '0')
+        {
+            printf("\n");
+
+            printf("%c: ", grafo->array[i].verticeOrigem);
+
+            iterador = grafo->array[i].primeiro;
+
+            while (iterador)
+            {
+
+                printf("[%c,%d] ", iterador->vertice, iterador->peso);
+
+                iterador = iterador->proximo;
+            }
+            printf("\n\n");
+        }
     }
 }
