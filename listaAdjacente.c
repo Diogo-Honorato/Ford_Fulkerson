@@ -213,7 +213,7 @@ Grafo *aumentarTamanhoArray(Grafo *grafo)
     return novoGrafo;
 }
 
-void adicionarAresta(Grafo *grafo, char verticeOrigem, char verticeDestino, int pesoAresta)
+Grafo *adicionarAresta(Grafo *grafo, char verticeOrigem, char verticeDestino, int pesoAresta)
 {
 
     // Verificar primeiro se o array esta com o fator de carga menor que 70%.
@@ -223,6 +223,8 @@ void adicionarAresta(Grafo *grafo, char verticeOrigem, char verticeDestino, int 
     }
 
     gerarAresta(grafo, verticeOrigem, verticeDestino, pesoAresta);
+
+    return grafo;
 }
 
 void imprimirGrafo(Grafo *grafo)
