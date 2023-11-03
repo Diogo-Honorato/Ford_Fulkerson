@@ -59,5 +59,7 @@ char **arquivoArestas(const char *nomeArquivo);
 //LeitorArquivoArestas
 Grafo *LeitorArquivo(Grafo *grafo,const char *nomeArquivo);
 
+void liberarMatriz(char **matriz, int linhas);
+
 
 #endif

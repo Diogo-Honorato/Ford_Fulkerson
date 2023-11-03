@@ -60,6 +60,8 @@ void liberarMemoria(Grafo *grafo)
     }
 
     free(grafo->array);
+
+    free(grafo);
 }
 
 int gerarChave(char verticeChave)
@@ -186,6 +188,7 @@ Grafo *aumentarTamanhoArray(Grafo *grafo)
     }
 
     free(grafo->array);
+    free(grafo);
 
     return novoGrafo;
 }
