@@ -214,7 +214,7 @@ void imprimirGrafo(Grafo *grafo)
         if (grafo->array[i].verticeOrigem != '0')
         {
             printf("\n");
-
+            
             printf("%c: ", grafo->array[i].verticeOrigem);
 
             iterador = grafo->array[i].primeiro;

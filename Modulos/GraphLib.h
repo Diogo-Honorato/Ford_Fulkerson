@@ -27,6 +27,8 @@ typedef struct Grafo
 
 } Grafo;
 
+
+//ListaAdjacente.c
 Grafo *criarGrafo();
 
 Celula *alocarCelula(char verticeAdjacente, int peso);
@@ -46,5 +48,16 @@ Grafo *aumentarTamanhoArray(Grafo *grafo);
 Grafo *adicionarAresta(Grafo *grafo, char verticeOrigem, char verticeDestino, int pesoAresta);
 
 void imprimirGrafo(Grafo *grafo);
+
+
+//LeitorArquivo
+int contadorLinha(const char *nomeArquivo);
+
+char **arquivoArestas(const char *nomeArquivo);
+
+
+//LeitorArquivoArestas
+Grafo *LeitorArquivo(Grafo *grafo,const char *nomeArquivo);
+
 
 #endif
