@@ -1,33 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "GraphLib.h"
 
 // Variavel global estatica para controlar o tamanho do array
 static int tamanhoArray = 11;
 
-typedef struct Celula
-{
-
-    char verticeAdjacente;
-    int peso;
-    struct Celula *proximo;
-
-} Celula;
-
-typedef struct Lista
-{
-
-    char verticeOrigem;
-    Celula *primeiro;
-    Celula *ultimo;
-
-} Lista;
-
-typedef struct Grafo
-{
-    Lista *array;
-    float quantidadeVertices;
-
-} Grafo;
 
 Grafo *criarGrafo()
 {
