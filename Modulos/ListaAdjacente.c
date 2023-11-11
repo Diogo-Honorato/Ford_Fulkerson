@@ -232,3 +232,21 @@ void imprimirGrafo(Grafo *grafo)
         }
     }
 }
+
+int buscarVertice(Grafo *grafo, char vertice){
+
+    int chave = gerarChave(vertice);
+
+    while(grafo->array[chave].verticeOrigem != vertice){
+
+        if(grafo->array[chave].verticeOrigem == '0'){
+            break;
+        }
+
+        vertice = vertice + 1;
+
+        chave = gerarChave(vertice);
+    }
+
+    return chave;
+}

@@ -1,7 +1,6 @@
 #ifndef GRAPH_LIB
 #define GRAPH_LIB
 
-
 typedef struct Celula
 {
 
@@ -47,6 +46,8 @@ Grafo *aumentarTamanhoArray(Grafo *grafo);
 
 Grafo *adicionarAresta(Grafo *grafo, char verticeOrigem, char verticeDestino, int pesoAresta);
 
+int buscarVertice(Grafo *grafo, char vertice);
+
 void imprimirGrafo(Grafo *grafo);
 
 
@@ -61,5 +62,16 @@ Grafo *LeitorArquivo(Grafo *grafo,const char *nomeArquivo);
 
 void liberarMatriz(char **matriz, int linhas);
 
+
+//Pilha.c
+typedef Lista Pilha;
+
+Pilha *criarPilha();
+
+Celula *pop(Pilha *pilha);
+
+void push(Pilha *pilha, char vertice, int peso);
+
+void liberarPilha(Pilha *pilha);
 
 #endif

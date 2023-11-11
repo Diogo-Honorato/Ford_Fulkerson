@@ -2,7 +2,7 @@
 CC = gcc
 CFLAGS = -Wall -g
 LDFLAGS = -lm
-SOURCES = ../Modulos/ListaAdjacente.c ../Modulos/LeitorArquivo.c ../Modulos/LeitorArquivoArestas.c  main.c
+SOURCES = ../Modulos/ListaAdjacente.c ../Modulos/LeitorArquivo.c ../Modulos/LeitorArquivoArestas.c ../Modulos/Pilha.c main.c
 
 	  
 HEADERS = ../Modulos/GraphLib.h
