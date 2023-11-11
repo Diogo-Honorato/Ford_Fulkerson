@@ -6,6 +6,7 @@ typedef struct Celula
 
     char verticeAdjacente;
     int peso;
+    int fluxoElementar;
     struct Celula *proximo;
 
 } Celula;
