@@ -33,7 +33,7 @@ Grafo *criarGrafo();
 
 Celula *alocarCelula(char verticeAdjacente, int peso);
 
-void liberarMemoria(Grafo *grafo);
+void liberarMemoriaGrafo(Grafo *grafo);
 
 int gerarChave(char verticeChave);
 
@@ -59,20 +59,28 @@ char **arquivoArestas(const char *nomeArquivo);
 
 
 //LeitorArquivoArestas
-Grafo *LeitorArquivo(Grafo *grafo,const char *nomeArquivo);
+Grafo *leitorArquivo(Grafo *grafo,const char *nomeArquivo);
 
-void liberarMatriz(char **matriz, int linhas);
+void liberarMemoriaMatriz(char **matriz, int linhas);
 
-
-//Pilha.c
+//Pilha.h
 typedef Lista Pilha;
 
 Pilha *criarPilha();
 
-Celula *pop(Pilha *pilha);
+char pop(Pilha *pilha);
 
-void push(Pilha *pilha, char vertice, int peso);
+void push(Pilha *pilha, char vertice);
 
-void liberarPilha(Pilha *pilha);
+int pilhaVazia(Pilha *pilha);
+
+void liberarMemoriaPilha(Pilha *pilha);
+
+//Dfs
+char *dfs(Grafo *grafo, char verticeInicial, char verticeAlvo);
+
+void liberarMemoriaDfs(char *caminhoDfs);
+//FordFulkerson
+
 
 #endif

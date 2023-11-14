@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "GraphLib.h"
 
-void liberarMatriz(char **matriz, int linhas)
+void liberarMemoriaMatriz(char **matriz, int linhas)
 {
     for (int i = 0; i < linhas; i++)
     {
@@ -11,7 +11,7 @@ void liberarMatriz(char **matriz, int linhas)
     free(matriz);
 }
 
-Grafo *LeitorArquivo(Grafo *grafo, const char *nomeArquivo)
+Grafo *leitorArquivo(Grafo *grafo, const char *nomeArquivo)
 {
     char **matrizConexoes = arquivoArestas(nomeArquivo);
     int tamanhoMatriz = contadorLinha(nomeArquivo);
@@ -22,7 +22,7 @@ Grafo *LeitorArquivo(Grafo *grafo, const char *nomeArquivo)
         grafo = adicionarAresta(grafo, matrizConexoes[i][0], matrizConexoes[i][1], matrizConexoes[i][2]);
     }
 
-    liberarMatriz(matrizConexoes, tamanhoMatriz);
+    liberarMemoriaMatriz(matrizConexoes, tamanhoMatriz);
 
     return grafo;
 }

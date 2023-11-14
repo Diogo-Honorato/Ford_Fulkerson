@@ -13,16 +13,14 @@ Pilha *criarPilha(){
     return pilha;
 }
 
-Celula *pop(Pilha *pilha){
+char pop(Pilha *pilha){
 
     Celula *removeItem = pilha->primeiro;
     
-    Celula *lixo;
+    char lixo;
 
-    lixo->peso = removeItem->peso;
-    lixo->verticeAdjacente = removeItem->verticeAdjacente;
-    lixo->proximo = NULL;
-    
+    lixo = removeItem->verticeAdjacente;
+      
     pilha->primeiro = pilha->primeiro->proximo;
 
     free(removeItem);
@@ -30,9 +28,9 @@ Celula *pop(Pilha *pilha){
     return lixo;
 }
 
-void push(Pilha *pilha, char vertice, int peso){
+void push(Pilha *pilha, char vertice){
 
-    Celula *novaCelula = alocarCelula(vertice,peso);
+    Celula *novaCelula = alocarCelula(vertice,0);
 
     if(pilha->primeiro == NULL){
 
@@ -46,9 +44,19 @@ void push(Pilha *pilha, char vertice, int peso){
     }
 }
 
-void liberarPilha(Pilha *pilha)
-{
+int pilhaVazia(Pilha *pilha){
 
+    if(pilha->primeiro == NULL){
+        
+        return 0;
+    }
+
+    return 1;
+}
+
+void liberarMemoriaPilha(Pilha *pilha)
+{
+    
     Celula *atual = pilha->primeiro;
 
     while (atual)

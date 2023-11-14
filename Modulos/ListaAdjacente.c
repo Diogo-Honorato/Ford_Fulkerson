@@ -46,7 +46,7 @@ Celula *alocarCelula(char verticeAdjacente, int peso)
     return novaCelula;
 }
 
-void liberarMemoria(Grafo *grafo)
+void liberarMemoriaGrafo(Grafo *grafo)
 {
     for (int i = 0; i < tamanhoArray; i++)
     {
@@ -240,6 +240,7 @@ int buscarVertice(Grafo *grafo, char vertice){
     while(grafo->array[chave].verticeOrigem != vertice){
 
         if(grafo->array[chave].verticeOrigem == '0'){
+            return -1;
             break;
         }
 
