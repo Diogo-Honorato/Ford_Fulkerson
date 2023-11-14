@@ -2,16 +2,19 @@
 #include <stdlib.h>
 #include "GraphLib.h"
 
-int verificaConexao(Grafo *grafo, char vertice,char verticeAdjacente){
+int verificaConexao(Grafo *grafo, char vertice, char verticeAdjacente)
+{
     Celula *iterador;
     int chave;
 
-    chave = buscarVertice(grafo,vertice);
+    chave = buscarVertice(grafo, vertice);
     iterador = grafo->array[chave].primeiro;
 
-    while(iterador){
+    while (iterador)
+    {
 
-        if(iterador->verticeAdjacente == verticeAdjacente){
+        if (iterador->verticeAdjacente == verticeAdjacente)
+        {
 
             return 1;
         }
@@ -22,7 +25,8 @@ int verificaConexao(Grafo *grafo, char vertice,char verticeAdjacente){
     return 0;
 }
 
-char *caminhoVolta(Grafo *grafo, char *caminhoInicial, char verticeInicial, int indiceVerticeAlvo){
+char *caminhoVolta(Grafo *grafo, char *caminhoInicial, char verticeInicial, int indiceVerticeAlvo)
+{
 
     int indiceDireita = indiceVerticeAlvo;
     int indiceEsquerda = indiceVerticeAlvo - 1;
@@ -31,35 +35,40 @@ char *caminhoVolta(Grafo *grafo, char *caminhoInicial, char verticeInicial, int 
 
     Pilha *pilha = criarPilha();
 
-    push(pilha,caminhoInicial[indiceDireita]);
+    push(pilha, caminhoInicial[indiceDireita]);
     tamanhoCaminhoFinal++;
 
-    while(caminhoInicial[indiceDireita] != verticeInicial){
-        
-        existeAresta = verificaConexao(grafo,caminhoInicial[indiceEsquerda],caminhoInicial[indiceDireita]);
+    while (caminhoInicial[indiceDireita] != verticeInicial)
+    {
 
-        if(existeAresta){
-            push(pilha,caminhoInicial[indiceEsquerda]);
+        existeAresta = verificaConexao(grafo, caminhoInicial[indiceEsquerda], caminhoInicial[indiceDireita]);
+
+        if (existeAresta)
+        {
+            push(pilha, caminhoInicial[indiceEsquerda]);
             indiceDireita = indiceEsquerda;
             indiceEsquerda--;
             tamanhoCaminhoFinal++;
-        }else{
+        }
+        else
+        {
 
             indiceEsquerda--;
         }
     }
 
-    char *caminhoFinal = (char*)malloc((tamanhoCaminhoFinal + 1) * sizeof(char));
+    char *caminhoFinal = (char *)malloc((tamanhoCaminhoFinal + 1) * sizeof(char));
     int i = 0;
 
-    while(pilhaVazia(pilha)){
+    while (pilhaVazia(pilha))
+    {
 
         caminhoFinal[i++] = pop(pilha);
     }
 
-    //Recebe '\0' para indicar o fim do array com o valor de "i" sendo o ultimo indice do array.
+    // Recebe '\0' para indicar o fim do array com o valor de "i" sendo o ultimo indice do array.
     caminhoFinal[i] = '\0';
-    
+
     return caminhoFinal;
 }
 
@@ -80,12 +89,12 @@ char *dfs(Grafo *grafo, char verticeInicial, char verticeAlvo)
 
     char *caminhoFinal;
 
-    char *caminho = (char*)malloc(26 * sizeof(char));
+    char *caminho = (char *)malloc(26 * sizeof(char));
 
-    for(int i = 0; i < 26; i++){
+    for (int i = 0; i < 26; i++)
+    {
         caminho[i] = '-';
     }
-
 
     push(pilha, verticeInicial);
 
@@ -99,8 +108,8 @@ char *dfs(Grafo *grafo, char verticeInicial, char verticeAlvo)
             visitados[indiceVisitado] = 1;
             caminho[indiceCaminho] = verticeRemovido;
 
-            //passado o indiceCaminho que representa o ultimo elemento colocado no array caminho.
-            caminhoFinal = caminhoVolta(grafo,caminho,verticeInicial,indiceCaminho);
+            // passado o indiceCaminho que representa o ultimo elemento colocado no array caminho.
+            caminhoFinal = caminhoVolta(grafo, caminho, verticeInicial, indiceCaminho);
 
             return caminhoFinal;
         }
@@ -139,7 +148,8 @@ char *dfs(Grafo *grafo, char verticeInicial, char verticeAlvo)
     return NULL;
 }
 
-void liberarMemoriaDfs(char *caminhoDfs){
+void liberarMemoriaDfs(char *caminhoDfs)
+{
 
     free(caminhoDfs);
 }
