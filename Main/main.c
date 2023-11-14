@@ -5,25 +5,25 @@
 
 int main()
 {
-    
+
     Grafo *G = criarGrafo();
 
     char *caminho;
 
     G = leitorArquivo(G, "../inputs/grafo_1.txt");
 
+    caminho = dfs(G, 'A', 'W');
 
-    caminho = dfs(G,'S','T');
-
-    for(int i = 0; i < 26; i++){
-
-        if(caminho[i] != '\0'){
-
-            printf("%c - ",caminho[i]);
-        }
-    }printf("\n");
-
+    if(caminho == NULL){
+        printf("\nNao existe caminho ate esse Vertice\n\n");
+        exit(0);
+    }
+    for (int i = 0; caminho[i] != '\0'; i++)
+    {
+        printf("%c - ", caminho[i]);
+    }
+    printf("\n");
 
     liberarMemoriaGrafo(G);
-    liberarMemoriaDfs(caminho);  
+    liberarMemoriaDfs(caminho);
 }

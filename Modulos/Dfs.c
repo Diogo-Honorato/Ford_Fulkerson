@@ -49,7 +49,7 @@ char *caminhoVolta(Grafo *grafo, char *caminhoInicial, char verticeInicial, int 
         }
     }
 
-    char *caminhoFinal = (char*)malloc(tamanhoCaminhoFinal * sizeof(char));
+    char *caminhoFinal = (char*)malloc((tamanhoCaminhoFinal + 1) * sizeof(char));
     int i = 0;
 
     while(pilhaVazia(pilha)){
@@ -57,6 +57,9 @@ char *caminhoVolta(Grafo *grafo, char *caminhoInicial, char verticeInicial, int 
         caminhoFinal[i++] = pop(pilha);
     }
 
+    //Recebe '\0' para indicar o fim do array com o valor de "i" sendo o ultimo indice do array.
+    caminhoFinal[i] = '\0';
+    
     return caminhoFinal;
 }
 
@@ -96,6 +99,7 @@ char *dfs(Grafo *grafo, char verticeInicial, char verticeAlvo)
             visitados[indiceVisitado] = 1;
             caminho[indiceCaminho] = verticeRemovido;
 
+            //passado o indiceCaminho que representa o ultimo elemento colocado no array caminho.
             caminhoFinal = caminhoVolta(grafo,caminho,verticeInicial,indiceCaminho);
 
             return caminhoFinal;
