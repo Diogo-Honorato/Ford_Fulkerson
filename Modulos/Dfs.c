@@ -2,6 +2,64 @@
 #include <stdlib.h>
 #include "GraphLib.h"
 
+int verificaConexao(Grafo *grafo, char vertice,char verticeAdjacente){
+    Celula *iterador;
+    int chave;
+
+    chave = buscarVertice(grafo,vertice);
+    iterador = grafo->array[chave].primeiro;
+
+    while(iterador){
+
+        if(iterador->verticeAdjacente == verticeAdjacente){
+
+            return 1;
+        }
+
+        iterador = iterador->proximo;
+    }
+
+    return 0;
+}
+
+char *caminhoVolta(Grafo *grafo, char *caminhoInicial, char verticeInicial, int indiceVerticeAlvo){
+
+    int indiceDireita = indiceVerticeAlvo;
+    int indiceEsquerda = indiceVerticeAlvo - 1;
+    int existeAresta;
+    int tamanhoCaminhoFinal = 0;
+
+    Pilha *pilha = criarPilha();
+
+    push(pilha,caminhoInicial[indiceDireita]);
+    tamanhoCaminhoFinal++;
+
+    while(caminhoInicial[indiceDireita] != verticeInicial){
+        
+        existeAresta = verificaConexao(grafo,caminhoInicial[indiceEsquerda],caminhoInicial[indiceDireita]);
+
+        if(existeAresta){
+            push(pilha,caminhoInicial[indiceEsquerda]);
+            indiceDireita = indiceEsquerda;
+            indiceEsquerda--;
+            tamanhoCaminhoFinal++;
+        }else{
+
+            indiceEsquerda--;
+        }
+    }
+
+    char *caminhoFinal = (char*)malloc(tamanhoCaminhoFinal * sizeof(char));
+    int i = 0;
+
+    while(pilhaVazia(pilha)){
+
+        caminhoFinal[i++] = pop(pilha);
+    }
+
+    return caminhoFinal;
+}
+
 char *dfs(Grafo *grafo, char verticeInicial, char verticeAlvo)
 {
 
@@ -16,6 +74,8 @@ char *dfs(Grafo *grafo, char verticeInicial, char verticeAlvo)
     int indiceVisitado;
 
     int indiceCaminho = 0;
+
+    char *caminhoFinal;
 
     char *caminho = (char*)malloc(26 * sizeof(char));
 
@@ -34,11 +94,11 @@ char *dfs(Grafo *grafo, char verticeInicial, char verticeAlvo)
         {
             indiceVisitado = verticeRemovido - 'A';
             visitados[indiceVisitado] = 1;
-
             caminho[indiceCaminho] = verticeRemovido;
 
-            return caminho;
-            break;
+            caminhoFinal = caminhoVolta(grafo,caminho,verticeInicial,indiceCaminho);
+
+            return caminhoFinal;
         }
 
         indiceVisitado = verticeRemovido - 'A';

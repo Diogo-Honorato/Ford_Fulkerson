@@ -5,5 +5,3 @@ B A 4
 B D 14
 C T 20
 C B 9
-D C 7
-D T 4
