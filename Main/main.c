@@ -8,22 +8,9 @@ int main()
 
     Grafo *G = criarGrafo();
 
-    char *caminho;
+    leitorArquivo(G, "../inputs/grafo_1.txt");
 
-    G = leitorArquivo(G, "../inputs/grafo_1.txt");
-
-    caminho = dfs(G, 'A', 'W');
-
-    if(caminho == NULL){
-        printf("\nNao existe caminho ate esse Vertice\n\n");
-        exit(0);
-    }
-    for (int i = 0; caminho[i] != '\0'; i++)
-    {
-        printf("%c - ", caminho[i]);
-    }
-    printf("\n");
+    imprimirGrafo(G);
 
     liberarMemoriaGrafo(G);
-    liberarMemoriaDfs(caminho);
 }

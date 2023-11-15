@@ -36,6 +36,7 @@ Celula *alocarCelula(char verticeAdjacente, int peso)
     novaCelula->peso = peso;
     novaCelula->verticeAdjacente = verticeAdjacente;
     novaCelula->proximo = NULL;
+    novaCelula->anterior = NULL;
 
     if (novaCelula == NULL)
     {
@@ -75,7 +76,7 @@ int gerarChave(char verticeChave)
 int fatorCargaArray(Grafo *grafo)
 {
 
-    float fatorCarga = (grafo->quantidadeVertices + 1)/ tamanhoArray;
+    float fatorCarga = (grafo->quantidadeVertices + 1) / tamanhoArray;
 
     if (fatorCarga > 0.70)
     {
@@ -124,7 +125,7 @@ void gerarAresta(Grafo *grafo, char verticeOrigem, char verticeDestino, int peso
     Celula *novaCelula = alocarCelula(verticeDestino, pesoAresta);
 
     // Verifica se o vertice em questao ja existe ou nao no array.
-    while (grafo->array[chave].verticeOrigem != '0' && grafo->array[chave].verticeOrigem != verticeOrigem)
+    while (grafo->array[chave].verticeOrigem != '0' && grafo->array[chave].verticeOrigem != '1' && grafo->array[chave].verticeOrigem != verticeOrigem)
     {
         verticeChave = verticeChave + 1;
 
@@ -136,6 +137,7 @@ void gerarAresta(Grafo *grafo, char verticeOrigem, char verticeDestino, int peso
     {
 
         grafo->array[chave].ultimo->proximo = novaCelula;
+        novaCelula->anterior = grafo->array[chave].ultimo;
         grafo->array[chave].ultimo = novaCelula;
     }
     else // Se nao existir.
@@ -161,7 +163,7 @@ Grafo *aumentarTamanhoArray(Grafo *grafo)
     for (int i = 0; i < tamanhoAnteriorArray; i++)
     {
 
-        if (grafo->array[i].verticeOrigem != '0')
+        if (grafo->array[i].verticeOrigem != '0' && grafo->array[i].verticeOrigem != '1')
         {
             iterador = grafo->array[i].primeiro;
 
@@ -175,7 +177,7 @@ Grafo *aumentarTamanhoArray(Grafo *grafo)
         }
     }
 
-    //libera a memoria do grafo antigo.
+    // libera a memoria do grafo antigo.
     for (int i = 0; i < tamanhoAnteriorArray; i++)
     {
         Celula *atual = grafo->array[i].primeiro;
@@ -214,10 +216,10 @@ void imprimirGrafo(Grafo *grafo)
     for (int i = 0; i < tamanhoArray; i++)
     {
 
-        if (grafo->array[i].verticeOrigem != '0')
+        if (grafo->array[i].verticeOrigem != '0' && grafo->array[i].verticeOrigem != '1')
         {
             printf("\n");
-            
+
             printf("%c: ", grafo->array[i].verticeOrigem);
 
             iterador = grafo->array[i].primeiro;
@@ -233,21 +235,82 @@ void imprimirGrafo(Grafo *grafo)
     }
 }
 
-int buscarVertice(Grafo *grafo, char vertice){
+int buscarVertice(Grafo *grafo, char vertice)
+{
 
     int chave = gerarChave(vertice);
 
-    while(grafo->array[chave].verticeOrigem != vertice){
+    char iteradorVertice = vertice;
 
-        if(grafo->array[chave].verticeOrigem == '0'){
+    while (grafo->array[chave].verticeOrigem != vertice)
+    {
+
+        if (grafo->array[chave].verticeOrigem == '0')
+        {
             return -1;
             break;
         }
 
-        vertice = vertice + 1;
+        iteradorVertice = iteradorVertice + 1;
 
-        chave = gerarChave(vertice);
+        chave = gerarChave(iteradorVertice);
     }
 
     return chave;
+}
+
+Grafo *removerAresta(Grafo *grafo, char vertice, char verticeAdajcente)
+{
+
+    int chave = buscarVertice(grafo, vertice);
+
+    Celula *iterador = grafo->array[chave].primeiro;
+
+    while (iterador)
+    {
+
+        if (iterador->verticeAdjacente == verticeAdajcente)
+        {
+
+            if (iterador->anterior == NULL)
+            {
+
+                grafo->array[chave].primeiro = iterador->proximo;
+
+                if (grafo->array[chave].primeiro != NULL)
+                {
+
+                    grafo->array[chave].primeiro->anterior = NULL;
+                }
+                else
+                {
+                    grafo->array[chave].ultimo = NULL; // Se não há próximo, é o único elemento na lista
+                    grafo->array[chave].verticeOrigem = '1';
+                    grafo->quantidadeVertices--;
+                }
+
+                free(iterador);
+            }
+            else if (iterador->proximo == NULL)
+            {
+
+                grafo->array[chave].ultimo = grafo->array[chave].ultimo->anterior;
+                grafo->array[chave].ultimo->proximo = NULL;
+
+                free(iterador);
+            }
+            else
+            {
+
+                iterador->proximo->anterior = iterador->anterior;
+                iterador->anterior->proximo = iterador->proximo;
+
+                free(iterador);
+            }
+        }
+
+        iterador = iterador->proximo;
+    }
+
+    return grafo;
 }

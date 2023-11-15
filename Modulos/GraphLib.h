@@ -8,6 +8,7 @@ typedef struct Celula
     int peso;
     int fluxoElementar;
     struct Celula *proximo;
+    struct Celula *anterior;
 
 } Celula;
 
@@ -51,6 +52,8 @@ int buscarVertice(Grafo *grafo, char vertice);
 
 void imprimirGrafo(Grafo *grafo);
 
+Grafo *removerAresta(Grafo *grafo, char vertice, char verticeAdajcente);
+
 
 //LeitorArquivo
 int contadorLinha(const char *nomeArquivo);
@@ -80,7 +83,8 @@ void liberarMemoriaPilha(Pilha *pilha);
 char *dfs(Grafo *grafo, char verticeInicial, char verticeAlvo);
 
 void liberarMemoriaDfs(char *caminhoDfs);
-//FordFulkerson
 
+//FordFulkerson
+Grafo *inverterAresta(Grafo *grafo, char verticeOrigem, char verticeAdjacente,int peso);
 
 #endif
