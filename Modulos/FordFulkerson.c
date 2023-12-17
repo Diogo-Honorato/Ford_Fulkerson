@@ -134,6 +134,8 @@ Grafo *fordFulkerson(Grafo *grafo, char verticeOrigem, char verticeDestino)
     }
     
     printf("\nFluxo maximo do grafo: [%d]\n\n",fluxoMaximo);
-
+    
+    imprimirGrafo(grafo);
+    
     return grafo;
 }
