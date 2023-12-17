@@ -54,6 +54,8 @@ void imprimirGrafo(Grafo *grafo);
 
 Grafo *removerAresta(Grafo *grafo, char vertice, char verticeAdajcente);
 
+int retornarTamanhoListaAdjacente();
+
 
 //LeitorArquivo
 int contadorLinha(const char *nomeArquivo);
@@ -85,6 +87,10 @@ char *dfs(Grafo *grafo, char verticeInicial, char verticeAlvo);
 void liberarMemoriaDfs(char *caminhoDfs);
 
 //FordFulkerson
-Grafo *inverterAresta(Grafo *grafo, char verticeOrigem, char verticeAdjacente,int peso);
+Grafo *inverterAresta(Grafo *grafo, char verticeOrigem, char verticeAdjacente);
+
+Grafo *gerarArestaVolta(Grafo *grafo, char verticeOrigem, char verticeDestino, int peso);
+
+Grafo *fordFulkerson(Grafo *grafo, char verticeOrigem, char verticeDestino);
 
 #endif

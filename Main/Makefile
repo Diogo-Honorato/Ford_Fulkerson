@@ -13,11 +13,15 @@ EXECUTABLE = grafo_exe
 all: $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(CFLAGS) -o $@ $(OBJECTS) $(LDFLAGS)
+	@$(CC) $(CFLAGS) -o $@ $(OBJECTS) $(LDFLAGS)
 
 %.o: %.c $(HEADERS)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
+# Regra para executar o programa
+run: $(EXECUTABLE)
+	@./$(EXECUTABLE)
+	
 # Limpeza
 clean:
-	rm -f $(OBJECTS) $(EXECUTABLE)
+	@rm -f $(OBJECTS) $(EXECUTABLE)

@@ -5,12 +5,12 @@
 
 int main()
 {
-
     Grafo *G = criarGrafo();
 
-    leitorArquivo(G, "../inputs/grafo_1.txt");
-
-    imprimirGrafo(G);
-
+    G = leitorArquivo(G, "../testes/input.txt"); 
+    
+    G = fordFulkerson(G,'S','T');
+    
     liberarMemoriaGrafo(G);
+    
 }

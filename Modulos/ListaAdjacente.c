@@ -34,6 +34,7 @@ Celula *alocarCelula(char verticeAdjacente, int peso)
     Celula *novaCelula = (Celula *)malloc(sizeof(Celula));
 
     novaCelula->peso = peso;
+    novaCelula->fluxoElementar = 0;
     novaCelula->verticeAdjacente = verticeAdjacente;
     novaCelula->proximo = NULL;
     novaCelula->anterior = NULL;
@@ -220,13 +221,13 @@ void imprimirGrafo(Grafo *grafo)
         {
             printf("\n");
 
-            printf("%c: ", grafo->array[i].verticeOrigem);
+            printf("(%c): ", grafo->array[i].verticeOrigem);
 
             iterador = grafo->array[i].primeiro;
 
             while (iterador)
             {
-                printf("[%c,%d] ", iterador->verticeAdjacente, iterador->peso);
+                printf("[%c,(%d/%d)] ", iterador->verticeAdjacente, iterador->peso,iterador->fluxoElementar);
 
                 iterador = iterador->proximo;
             }
@@ -313,4 +314,9 @@ Grafo *removerAresta(Grafo *grafo, char vertice, char verticeAdajcente)
     }
 
     return grafo;
+}
+
+int retornarTamanhoListaAdjacente(){
+    
+    return tamanhoArray;
 }
