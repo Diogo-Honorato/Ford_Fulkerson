@@ -227,7 +227,7 @@ void imprimirGrafo(Grafo *grafo)
 
             while (iterador)
             {
-                printf("[%c,(%d/%d)] ", iterador->verticeAdjacente, iterador->peso,iterador->fluxoElementar);
+                printf("[%c,(%d)] ", iterador->verticeAdjacente, iterador->peso);
 
                 iterador = iterador->proximo;
             }
