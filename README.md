@@ -1,5 +1,5 @@
 ## Descrição
-Este é um código escrito na linguagem C, feito no sistema operacional Linux, para resolver o problema de fluxo máximo, que se concentra em encontrar o máximo de fluxo que pode passar por uma rede direcionada, onde há um nó de origem (source) e um nó de destino (sink), além de arestas que conectam esses nós, cada uma com uma capacidade específica.
+Este é um código escrito na linguagem C, para resolver o problema de fluxo máximo, que se concentra em encontrar o máximo de fluxo que pode passar por uma rede direcionada, onde há um nó de origem (source) e um nó de destino (sink), além de arestas que conectam esses nós, cada uma com uma capacidade específica.
 
 ## Como usar
 ### Para executar o algoritmo:
